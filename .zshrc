@@ -1,5 +1,5 @@
 # If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
+export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
@@ -101,27 +101,28 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 export PATH="$HOME/.local/nvim-linux64/bin:$PATH"
-. "$HOME/.cargo/env"
+# . "$HOME/.cargo/env"
 export PATH="$HOME/.local/bin:$PATH"
 
 alias v=nvim
 alias t=tmux
+alias ta=tmux a
 
-# [ -f ~/.fzf.bash ] && source ~/.fzf.bash
+ [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
-xset r rate 220 40
+xset r rate 200 50
 
 export PATH="$HOME/opt/lampp/bin/php:$PATH"
 
-export PATH="$HOME/Downloads/node-v20.9.0-linux-x64/bin:$PATH"
+export PATH="$HOME/Downloads/node-v21.6.2-linux-x64/bin:$PATH"
 export PATH="$HOME/Downloads/go/bin:$PATH"
 
-
+# fzf search through homd dir , fd|fdfind|find is reqired 
 cf() {
     local dir
-    dir=$(fd . --type d --max-depth 2 --hidden ~/| fzf --prompt "Choose a directory: " --preview 'tree -C -L 2 {}')
+    dir=$(fdfind . --type d --max-depth 2 --hidden ~/|fzf --prompt "Choose a directory: " --preview 'tree -C -L 2 {}')
     if [ -n "$dir" ]; then
-        cd "$dir" || return 1
+        cd "$dir"|| return 1
         zle reset-prompt
     fi
 }
@@ -129,3 +130,35 @@ cf() {
 zle -N cf-widget cf
 bindkey '^f' cf-widget
 
+
+ct() {
+
+    local selected
+    local selected_name
+
+if [[ $# -eq 1 ]]; then
+    selected=$1
+else
+    selected=$(fdfind . --type d --max-depth 2 --hidden ~/|fzf)
+
+fi
+
+if [[ -z $selected ]]; then
+    exit 0
+fi
+selected_name=$(basename "$selected" | tr . _)
+tmux_running=$(pgrep tmux)
+
+if [[ -z $TMUX ]] && [[ -z $tmux_running ]]; then
+    tmux new-session -s $selected_name -c $selected
+    exit 0
+fi
+
+if ! tmux has-session -t=$selected_name 2> /dev/null; then
+    tmux new-session -ds $selected_name -c $selected
+fi
+
+tmux switch-client -t $selected_name}
+
+zle -N ct-widget ct
+bindkey '^t' ct-widget

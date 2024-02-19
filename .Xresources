@@ -5,5 +5,5 @@
 # 125% 120
 # 100% 96
 Xft.dpi: 144
-URxvt.transparent: true
-URxvt.shading:20
+#URxvt.transparent: true
+#URxvt.shading:20

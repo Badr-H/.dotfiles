@@ -9,7 +9,7 @@ end)
 
 require('mason').setup({})
 require('mason-lspconfig').setup({
-  ensure_installed = { 'lua_ls', 'tsserver', 'html', 'jdtls', 'jsonls', 'intelephense', 'gopls' },
+  ensure_installed = { 'lua_ls', 'tsserver', 'html', 'jdtls', 'jsonls', 'intelephense', },
   handlers = {
     lsp_zero.default_setup,
     gopls = function()

@@ -76,7 +76,8 @@ require('onedark').setup {
 
 -- setup must be called before loading
 function ColorMyPencils(color)
-	color = color or "onedark"
+	color = color or "moonfly"
+
 
 	vim.cmd.colorscheme(color)
 

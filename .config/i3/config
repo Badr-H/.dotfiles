@@ -83,7 +83,8 @@ bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
 # split in horizontal orientation
-bindsym $mod+h split h
+
+# bindsym $mod+h split h
 
 # split in vertical orientation
 bindsym $mod+v split v
@@ -195,4 +196,7 @@ exec_always for id in $(xinput list | grep "pointer" | cut -d '=' -f 2 | cut -f 
 
 exec_always xinput --set-prop 10 'libinput Accel Speed' 0
 
-exec_always xinput set-prop 10 "Coordinate Transformation Matrix" 1, 0, 0, 0, 1, 0, 0, 0, 2
+exec_always xinput set-prop 10 "Coordinate Transformation Matrix" 1, 0, 0, 0, 1, 0, 0, 0, 2.25
+
+bindsym $mod+Tab workspace back_and_forth
+

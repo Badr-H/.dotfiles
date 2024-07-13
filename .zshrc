@@ -162,3 +162,7 @@ tmux switch-client -t $selected_name}
 
 zle -N ct-widget ct
 bindkey '^t' ct-widget
+
+export PATH="$HOME/Downloads/flutter/bin:$PATH"
+
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"

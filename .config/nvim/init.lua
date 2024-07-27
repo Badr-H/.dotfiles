@@ -11,7 +11,7 @@ vim.opt.shiftwidth = 4
 vim.opt.expandtab = true
 vim.opt.smartindent = true
 
-vim.opt.wrap = true
+vim.opt.wrap = false
 
 vim.o.mouse = 'a'
 
@@ -184,7 +184,7 @@ require('lazy').setup {
       'williamboman/mason-lspconfig.nvim',
       'WhoIsSethDaniel/mason-tool-installer.nvim',
 
-      { 'j-hui/fidget.nvim', opts = {} },
+      -- { 'j-hui/fidget.nvim', opts = {} },
 
       { 'folke/neodev.nvim', opts = {} },
     },
@@ -233,7 +233,7 @@ require('lazy').setup {
         -- But for many setups, the LSP (`tsserver`) will work just fine
         -- tsserver = {},
         --
-
+        jdtls = {},
         lua_ls = {
           -- cmd = {...},
           -- filetypes = { ...},
@@ -379,7 +379,7 @@ require('lazy').setup {
     'nvim-treesitter/nvim-treesitter',
     build = ':TSUpdate',
     opts = {
-      ensure_installed = { 'bash', 'c', 'html', 'lua', 'luadoc', 'markdown', 'vim', 'vimdoc' },
+      ensure_installed = { 'bash', 'c', 'html', 'lua', 'markdown', 'vim', 'vimdoc', 'java' },
       auto_install = true,
       highlight = {
         enable = true,
@@ -412,6 +412,7 @@ require('lazy').setup {
   },
   require 'custom.plugins',
   require 'kickstart.plugins.neo-tree',
+  require 'kickstart.plugins.debug',
 }
 
 vim.cmd.highlight 'WinSeparator guibg=bg'

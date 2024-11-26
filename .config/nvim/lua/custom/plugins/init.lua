@@ -40,6 +40,15 @@ return {
   },
   { 'bluz71/vim-moonfly-colors', name = 'moonfly', lazy = false, priority = 1000 },
   {
+    'navarasu/onedark.nvim',
+    lazy = false,
+    priority = 1000,
+    config = function()
+      require('onedark').setup { style = 'warm', transparent = true }
+    end,
+  },
+  { 'dasupradyumna/midnight.nvim', lazy = false, priority = 1000 },
+{
     'akinsho/flutter-tools.nvim',
     lazy = false,
     dependencies = {
@@ -52,14 +61,14 @@ return {
       }
     end,
   },
-  -- 'xiyaowong/transparent.nvim',
+  'xiyaowong/transparent.nvim',
   {
     'shortcuts/no-neck-pain.nvim',
     version = '*',
     config = function()
       require('no-neck-pain').setup {
         width = 85,
-        autocmds = { enableOnVimEnter = true },
+        autocmds = { enableOnVimEnter = false },
         buffers = {
           wo = {
             fillchars = 'eob: ',

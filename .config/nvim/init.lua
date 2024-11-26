@@ -11,7 +11,7 @@ vim.opt.shiftwidth = 4
 vim.opt.expandtab = true
 vim.opt.smartindent = true
 
-vim.opt.wrap = false
+vim.opt.wrap = true
 
 vim.o.mouse = 'a'
 
@@ -46,7 +46,9 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 })
 
 vim.g.moonflyItalics = true
-vim.g.moonflyCursorColor = true
+vim.g.moonflyCursorColor = false
+vim.g.moonflyTransparent = true
+
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
 vim.g.mapleader = ' '
@@ -74,12 +76,12 @@ vim.keymap.set('n', ';', ':')
 -- vim.keymap.set('n', 's', 'b')
 -- vim.keymap.set("n","<Esc>","i")
 -- navigate within insert mode
-vim.keymap.set('i', '<C-b>', '<ESC>^i')
-vim.keymap.set('i', '<C-e>', '<End>')
-vim.keymap.set('i', '<C-h>', '<Left>')
-vim.keymap.set('i', '<C-l>', '<Right>')
-vim.keymap.set('i', '<C-j>', '<Down>')
-vim.keymap.set('i', '<C-k>', '<Up>')
+-- vim.keymap.set('i', '<C-b>', '<ESC>^i')
+-- vim.keymap.set('i', '<C-e>', '<End>')
+-- vim.keymap.set('i', '<C-h>', '<Left>')
+-- vim.keymap.set('i', '<C-l>', '<Right>')
+-- vim.keymap.set('i', '<C-j>', '<Down>')
+-- vim.keymap.set('i', '<C-k>', '<Up>')
 --
 --
 --
@@ -129,12 +131,18 @@ require('lazy').setup {
         end,
       },
       { 'nvim-telescope/telescope-ui-select.nvim' },
-
-      { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
     },
     config = function()
       -- [[ Configure Telescope ]]
       require('telescope').setup {
+        defaults = {
+          mappings = {
+            i = {
+              ['<C-u>'] = false,
+              ['<C-d>'] = false,
+            },
+          },
+        },
         extensions = {
           ['ui-select'] = {
             require('telescope.themes').get_dropdown(),
@@ -160,7 +168,7 @@ require('lazy').setup {
       vim.keymap.set('n', '<leader>/', function()
         builtin.current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
           winblend = 10,
-          previewer = false,
+          previewer = true,
         })
       end, { desc = '[/] Fuzzily search in current buffer' })
 
@@ -184,7 +192,7 @@ require('lazy').setup {
       'williamboman/mason-lspconfig.nvim',
       'WhoIsSethDaniel/mason-tool-installer.nvim',
 
-      -- { 'j-hui/fidget.nvim', opts = {} },
+      { 'j-hui/fidget.nvim', opts = {} },
 
       { 'folke/neodev.nvim', opts = {} },
     },
@@ -211,6 +219,9 @@ require('lazy').setup {
 
           map('K', vim.lsp.buf.hover, 'Hover Documentation')
           map('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
+          vim.keymap.set('n', '<C-h>', function()
+            vim.lsp.buf.signature_help()
+          end, opts)
         end,
       })
       vim.keymap.set('n', '<S-l>', function()
@@ -304,15 +315,20 @@ require('lazy').setup {
       {
         'L3MON4D3/LuaSnip',
         build = (function()
-          if vim.fn.has 'win32' == 1 or vim.fn.executable 'make' == 0 then
-            return
-          end
+          -- if vim.fn.has 'win32' == 1 or vim.fn.executable 'make' == 0 then
+          --   return
+          -- end
           return 'make install_jsregexp'
         end)(),
         dependencies = {},
       },
       'saadparwaiz1/cmp_luasnip',
-
+      {
+        'rafamadriz/friendly-snippets',
+        config = function()
+          require('luasnip.loaders.from_vscode').lazy_load()
+        end,
+      },
       'hrsh7th/cmp-nvim-lsp',
       'hrsh7th/cmp-path',
     },
@@ -368,13 +384,13 @@ require('lazy').setup {
 
   { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
 
-  { -- Collection of various small independent plugins/modules
-    'echasnovski/mini.nvim',
-    config = function()
-      require('mini.ai').setup { n_lines = 500 }
-      require('mini.surround').setup()
-    end,
-  },
+  -- { -- Collection of various small independent plugins/modules
+  --   'echasnovski/mini.nvim',
+  --   config = function()
+  --     require('mini.ai').setup { n_lines = 500 }
+  --     require('mini.surround').setup()
+  --   end,
+  -- },
   { -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
     build = ':TSUpdate',

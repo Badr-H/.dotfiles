@@ -15,9 +15,14 @@ config = {
 	line_height = 1.0,
 
 	-- Color Scheme
-	-- color_scheme = "matrix (terminal.sexy)",
+	color_scheme = "matrix (terminal.sexy)",
 	enable_tab_bar = true,
 	window_decorations = "TITLE",
+	default_cursor_style = "SteadyBlock",
+	colors = {
+		cursor_bg = "#AAAAAA",
+		cursor_fg = "#AAAAAA",
+	},
 
 	-- Window settings
 	-- window_background_opacity = 0.95,
